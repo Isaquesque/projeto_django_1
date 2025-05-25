@@ -1,5 +1,16 @@
 {% extends 'layouts/base.html' %}
 {%block content%}
     {% include 'partials/header.html' %}
-    
+    {% include 'partials/search_form.html' %}
+
+    <div class="main-content-container">
+        <div class="main-content main-content-list container">
+            {% include 'partials/recipe_card.html' %}
+            {% include 'partials/recipe_card.html' %}
+            {% include 'partials/recipe_card.html' %}
+            {% include 'partials/recipe_card.html' %}
+            {% include 'partials/recipe_card.html' %}
+        </div>
+    </div>
+    {% include 'partials/footer.html' %}
 {%endblock%}
