@@ -35,8 +35,8 @@ class DataGenerator():
         "lanche",
         "sobremesa"
     ]
-
-    def generate():
+    @classmethod
+    def generate(cls):
         title = fake.text(max_nb_chars=50,ext_word_list=DataGenerator._title_words)
         name = fake.name()
         date = fake.date(pattern="%d/%m/%Y")
