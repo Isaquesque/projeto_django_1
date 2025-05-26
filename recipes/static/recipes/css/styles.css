@@ -157,7 +157,7 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .recipe-list-item {
-    max-width: 40rem;
+    max-width: 32rem;
 }
 .recipe-item {
     max-width: 64rem;
@@ -233,6 +233,10 @@ h1,h2,h3,h4,h5,h6{
 
 .recipe-footer a:hover {
     filter: brightness(2);
+}
+
+.preparation-steps{
+    padding: 2rem;
 }
 
 /* estilos footer */
