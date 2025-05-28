@@ -1,0 +1,14 @@
+{% extends 'layouts/base.html' %}
+{%block content%}
+    {% include 'partials/header.html' %}
+    {% include 'partials/search_form.html' %}
+    <h1>Receitas da categoria: {{category_name}}</h1>
+    <div class="main-content-container">
+        <div class="main-content main-content-list container">
+            {% for recipe in recipes %}
+                {% include 'partials/recipe_card.html' with is_recipes_list_page=True %}
+            {% endfor %}
+        </div>
+    </div>
+    {% include 'partials/footer.html' %}
+{%endblock%}
