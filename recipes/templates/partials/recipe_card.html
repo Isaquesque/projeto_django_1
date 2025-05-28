@@ -1,56 +1,64 @@
-<div class="recipe {{class_recipe_card}} recipe-list-item">
-    <div class="recipe-cover">
-        <img src="https://corhexa.com/png/800x400/ddd" alt="Temporário">
-    </div>
-    <div class="recipe-title-container">
-        <h2 class="recipe-title">{{data.title}}</h2>
-    </div>
-    <div class="recipe-author">
-        <span class="recipe-author-item">
-            <i class="fas fa-user"></i>
-            {{data.name}}
-        </span>
-        <span class="recipe-author-item">
-            <i class="fas fa-calendar-alt"></i>
-            {{data.date}} às {{data.time}}
-        </span>
-        <span class="recipe-author-item">
-            <a href="">
-                <i class="fas fa-layer-group"></i>
-                <span>{{data.category}}</span>
-            </a>
-        </span>
-    </div>
-    <div class="recipe-content">
-        <p>{{data.text}}</p>
-    </div>
-    <div class="recipe-meta-container">
-        <div class="recipe-meta recipe-preparation">
-            <h3 class="recipe-meta-title"><i class="fas fa-stopwatch"></i> Preparo</h3>
-            <div class="recipe-meta-text">
-                {{data.preparation_time}} Minutos
+{% if recipe %}
+    <div class="recipe {{class_recipe_card}} recipe-list-item">
+        <div class="recipe-cover">
+            {% if recipe.cover%}
+                <img src="{{recipe.cover.url}}" alt="Temporário">
+            {% endif %}
+        </div>
+        <div class="recipe-title-container">
+            <h2 class="recipe-title">{{recipe.title}}</h2>
+        </div>
+        <div class="recipe-author">
+            {% if recipe.author is not None %}
+                <span class="recipe-author-item">
+                    <i class="fas fa-user"></i>
+                    {{recipe.author.username}}
+                </span>
+            {% endif %}
+            <span class="recipe-author-item">
+                <i class="fas fa-calendar-alt"></i>
+                {{recipe.created_at|date:"d/m/Y"}} às {{recipe.created_at|date:"H:i"}}
+            </span>
+            {% if recipe.category is not None%}
+            <span class="recipe-author-item">
+                <a href="{% url 'category' recipe.category.id %}">
+                    <i class="fas fa-layer-group"></i>
+                    <span>{{recipe.category.name}}</span>
+                </a>
+            </span>
+            {% endif %}
+        </div>
+        <div class="recipe-content">
+            <p>{{recipe.description}}</p>
+        </div>
+        <div class="recipe-meta-container">
+            <div class="recipe-meta recipe-preparation">
+                <h3 class="recipe-meta-title"><i class="fas fa-stopwatch"></i> Preparo</h3>
+                <div class="recipe-meta-text">
+                    {{recipe.preparation_time}} {{recipe.preparation_time_unit}}
+                </div>
+            </div>
+            <div class="recipe-meta recipe-servings">
+                <h3 class="recipe-meta-title"><i class="fas fa-pizza-slice"></i> Porções</h3>
+                <div class="recipe-meta-text">
+                    {{recipe.servings}} {{recipe.servings_unit}}
+                </div>
             </div>
         </div>
-        <div class="recipe-meta recipe-servings">
-            <h3 class="recipe-meta-title"><i class="fas fa-pizza-slice"></i> Porções</h3>
-            <div class="recipe-meta-text">
-                {{data.portions}} Porções
+        {% if is_detail_page %}
+            <div class="preparation-steps">
+                {{recipe.preparation_steps|linebreaksbr}}
             </div>
-        </div>
+        {% endif %}
+
+        {% if is_recipes_list_page %}
+            <footer class="recipe-footer">
+                <a class="recipe-read-more button button-dark button-full-width" href="{% url 'recipe' recipe.id %}">
+                    <i class="fas fa-eye"></i>
+                    <span>ver mais...</span>
+                </a>
+            </footer>
+        {% endif %}
+
     </div>
-    {% if is_detail_page %}
-        <div class="preparation-steps">
-            {{data.preparation_steps|linebreaksbr}}
-        </div>
-    {% endif %}
-
-    {% if is_recipes_list_page %}
-        <footer class="recipe-footer">
-            <a class="recipe-read-more button button-dark button-full-width" href="/recipes/3/">
-                <i class="fas fa-eye"></i>
-                <span>ver mais...</span>
-            </a>
-        </footer>
-    {% endif %}
-
-</div>
+{% endif %}
