@@ -13,16 +13,19 @@ def recipe_details(request, recipe_id):
 
     if(recipe):
         recipe = recipe[0]
+    else:
+        return HttpResponse(content="Receita não encontrada", status=404)
 
     return render(request, "recipes_view.html", context={"recipe":recipe})
 
 def category_recipes(request, category_id):
-    recipes = list(Recipe.objects.filter(category__id = category_id, is_published = True))
     category_name = Category.objects.filter(id=category_id)
+    recipes = list(Recipe.objects.filter(category__id = category_id, is_published = True))
+    
 
     if(category_name):
         category_name = category_name[0].name
     else:
-        category_name = ""
+        return HttpResponse(content="Categoria não encontrada", status=404)
 
     return render(request, "category_view.html", context={"recipes":recipes, "category_name":category_name})
