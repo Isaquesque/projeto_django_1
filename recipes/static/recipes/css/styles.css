@@ -237,6 +237,20 @@ h1,h2,h3,h4,h5,h6{
 
 .preparation-steps{
     padding: 2rem;
+    background-color: var(--color-gray-1);
+    color: var(--color-gray-8)
+}
+
+.preparation-steps h1, h2, h3, h4, h5, h6{
+    padding: 2rem;
+}
+
+.preparation-steps ul, ol{
+    margin: 1rem 2rem;
+}
+
+.preparation-steps li{
+    margin: 1rem 2rem;
 }
 
 /* estilos footer */
@@ -258,4 +272,14 @@ h1,h2,h3,h4,h5,h6{
 
 .main-footer a:hover {
     filter: brightness(.8);
+}
+
+/* classes ultilitarias */
+
+.my{
+    margin: 2rem 0;
+}
+
+.text-center{
+    text-align: center;
 }
