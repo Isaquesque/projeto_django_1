@@ -5,7 +5,7 @@
 
     <div class="main-content-container">
         <div class="main-content main-content-list container">
-            {% for data in data_list %}
+            {% for recipe in recipes %}
                 {% include 'partials/recipe_card.html' with is_recipes_list_page=True %}
             {% endfor %}
         </div>
