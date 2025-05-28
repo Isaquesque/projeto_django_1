@@ -46,6 +46,7 @@
             </div>
         </div>
         {% if is_detail_page %}
+            <hr>
             <div class="preparation-steps">
                 {% if recipe.preparation_steps_is_html is True %}
                     {{recipe.preparation_steps|safe}}
