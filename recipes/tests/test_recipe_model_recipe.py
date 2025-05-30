@@ -66,3 +66,11 @@ class TestModelRecipe(TestRecipeBaseData):
         )
 
         self.assertFalse(getattr(recipe, field))
+
+    def test_model_recipe_str_representation_is_the_same_as_the_title_recipe(self):
+        recipe = self.make_recipe_with_no_fields_by_default(
+            title="minha receita sem setar campos default",
+            author_name="meu novo usuario"
+        )
+
+        self.assertEqual(str(recipe), recipe.title)
