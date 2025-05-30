@@ -34,6 +34,14 @@ class RecipeViewsTest(TestRecipeBaseData):
         response = self.client.get(reverse("home"))
         content = response.content.decode("utf-8")
         assert "minha nova receita" in content
+    
+    def test_recipe_home_template_shows_message_if__no_recipes_is_published(self):
+        self.make_recipe(
+            title="minha receita não publicada",
+            is_published=False
+        )
+        response = self.client.get(reverse("home"))
+        assert "Não existem receitas publicadas ainda" in response.content.decode("utf-8")
 
 
 # -----------------------
@@ -56,10 +64,19 @@ class RecipeViewsTest(TestRecipeBaseData):
 
     def test_recipe_details_template_shows_recipe_card_details(self):
         self.make_recipe()
-        response = self.client.get(reverse("home"))
+        response = self.client.get(reverse("recipe" , kwargs={"recipe_id":1}))
         content = response.content.decode("utf-8")
         assert "minha nova receita" in content
-        assert "receita rapida" in content
+    
+    def test_recipe_details_view_returns_404_code_if_the_recipe_are_no_published(self):
+        self.make_recipe(
+            title="minha recieta não publicada",
+            is_published=False
+        )
+        response = self.client.get(reverse("recipe" , kwargs={"recipe_id":1}))
+        content = response.content.decode("utf-8")
+        assert "minha nova receita" not in content
+        assert response.status_code == 404
 
 # -----------------------
     # ainda não irá retornar 200 pois não existe nada no banco de dados de teste
@@ -85,3 +102,16 @@ class RecipeViewsTest(TestRecipeBaseData):
         recipes = response.context[0]["recipes"]
         for recipe in recipes:
             assert recipe.title in response.content.decode("utf-8")
+
+    def test_recipe_category_template_shows_message_if_no_recipes_are_created(self):
+        self.make_category("minha categoria sem receitas")
+        response = self.client.get(reverse("category", kwargs={"category_id":1}))
+        assert "Não existem receitas publicadas nesta categoria ainda" in response.content.decode("utf-8")
+
+    def test_recipe_category_template_shows_message_if__no_recipes_is_published(self):
+        self.make_recipe(
+            title="minha receita não publicada",
+            is_published=False
+        )
+        response = self.client.get(reverse("category", kwargs={"category_id":1}))
+        assert "Não existem receitas publicadas nesta categoria ainda" in response.content.decode("utf-8")
