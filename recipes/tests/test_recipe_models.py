@@ -6,7 +6,34 @@ from parameterized import parameterized
 class TestModelRecipe(TestRecipeBaseData):
     def setUp(self):
         self.recipe = self.make_recipe()
-        
+
+    def make_recipe_with_no_fields_by_default(
+        self,
+        title = "minha nova receita",
+        description = "receita rapida",
+        slug = "minha-nova-receita",
+        preparation_time = 10,
+        preparation_time_unit = "minutos",
+        servings = 3,
+        servings_unit = "porções",
+        preparation_steps = "passos de preparo",
+        category_name = "nova categoria",
+        author_name = "novo usuario"
+    ):
+        recipe = Recipe(
+            title = title,
+            description = description,
+            slug = slug,
+            preparation_time = preparation_time,
+            preparation_time_unit = preparation_time_unit,
+            servings = servings,
+            servings_unit = servings_unit,
+            preparation_steps = preparation_steps,
+            category = self.make_category(name=category_name),
+            author = self.make_author(username=author_name)
+        )
+        return recipe
+
     @parameterized.expand(
             [
                 ("title", 65),
@@ -25,3 +52,17 @@ class TestModelRecipe(TestRecipeBaseData):
             was_validate_correctly = True
         finally:
             assert was_validate_correctly
+
+    @parameterized.expand(
+            [
+                ("is_published"),
+                ("preparation_steps_is_html")
+            ]
+    )
+    def test_model_recipe_some_fields_is_false_by_default(self, field):
+        recipe = self.make_recipe_with_no_fields_by_default(
+            title="minha receita sem setar campos default",
+            author_name="meu novo usuario"
+        )
+
+        self.assertFalse(getattr(recipe, field))
