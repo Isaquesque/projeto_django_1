@@ -14,6 +14,10 @@ class RecipeViewsTest(TestRecipeBaseData):
     def test_recipe_category_view_function_is_correct(self):
         view = resolve(reverse("category",kwargs={"category_id":1}))
         self.assertIs(view.func, views.category_recipes)
+
+    def test_recipe_search_view_function_is_correct(self):
+        resolved_url = resolve(reverse("search"))
+        self.assertIs(resolved_url.func, views.recipes_search)
 # -----------------------
 
     def test_recipe_home_view_ruturns_status_code_200(self):
@@ -115,3 +119,19 @@ class RecipeViewsTest(TestRecipeBaseData):
         )
         response = self.client.get(reverse("category", kwargs={"category_id":1}))
         assert "Não existem receitas publicadas nesta categoria ainda" in response.content.decode("utf-8")
+    
+# -----------------------
+
+    def test_recipe_search_view_returns_status_code_200(self):
+        search_url = f'{reverse("search")}?search=teste'
+        response = self.client.get(search_url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_recipe_search_view_render_search_page(self):
+        search_url = f'{reverse("search")}?search=teste'
+        response = self.client.get(search_url)
+        self.assertEqual(response.templates[0].name, "search.html")
+
+    def test_recipe_search_view_returns_status_code_404_if_there_is_no_matching_search(self):
+        response = self.client.get(reverse("search"))
+        self.assertEqual(response.status_code, 404)
