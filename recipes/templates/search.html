@@ -1,0 +1,20 @@
+{% extends 'layouts/base.html' %}
+{%block content%}
+    {% include 'partials/header.html' %}
+    {% include 'partials/search_form.html' %}
+    <div class="main-content-container">
+        <div class="main-content main-content-list container">
+            {% if recipes %}
+                {% for recipe in recipes %}
+                    {% include 'partials/recipe_card.html' with is_recipes_list_page=True %}
+                {% endfor %}
+            {% else %}
+            <div class="my">
+                <h1>Não existem receitas publicadas ainda</h1>
+            </div>
+            {% endif %}
+            
+        </div>
+    </div>
+    {% include 'partials/footer.html' %}
+{%endblock%}
