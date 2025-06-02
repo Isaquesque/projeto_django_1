@@ -29,3 +29,11 @@ def category_recipes(request, category_id):
         return HttpResponse(content="Categoria não encontrada", status=404)
 
     return render(request, "category_view.html", context={"recipes":recipes, "category_name":category_name})
+
+def recipes_search(request):
+    params = request.GET
+    search_term = params.get("search", "").strip()
+    if(search_term):
+        return render(request, "search.html", context={"search_term":search_term})
+    
+    return HttpResponse("nenhum termo correspondente foi encontrado", status=404)
