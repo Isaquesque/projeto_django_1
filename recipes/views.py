@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from utils.fake_data_generator import DataGenerator
 from .models import Recipe, Category
+from django.db.models import Q
 
 def home(request):
     recipes = list(Recipe.objects.all().filter(is_published = True))
@@ -34,6 +35,12 @@ def recipes_search(request):
     params = request.GET
     search_term = params.get("search", "").strip()
     if(search_term):
-        return render(request, "search.html", context={"search_term":search_term})
+        recipes = Recipe.objects.filter(
+            Q(
+                Q(title__icontains = search_term) | Q(description__icontains = search_term)
+            ),
+            is_published = True
+        )
+        return render(request, "search.html", context={"search_term":search_term, "recipes":recipes})
     
     return HttpResponse("nenhum termo correspondente foi encontrado", status=404)
