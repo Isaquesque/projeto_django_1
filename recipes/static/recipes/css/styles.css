@@ -163,9 +163,12 @@ h1,h2,h3,h4,h5,h6{
     max-width: 64rem;
 }
 
-.recipe img {
-    max-width: 100%;
-}
+.recipe-cover img {
+    width: 100%;
+    height: 20rem; 
+    object-fit: cover;
+} 
+
 
 .recipe:hover {
     transform: scale(1.02);
