@@ -3,11 +3,22 @@ from django.http import HttpResponse
 from utils.fake_data_generator import DataGenerator
 from .models import Recipe, Category
 from django.db.models import Q
+from django.core.paginator import Paginator
+from utils.make_pagination import make_pagination
 
 def home(request):
-    recipes = list(Recipe.objects.all().filter(is_published = True))
+    all_recipes = list(Recipe.objects.all().filter(is_published = True))
 
-    return render(request, "home.html", context={"recipes":recipes})
+    pagination_dict = make_pagination(
+        request,
+        all_recipes,
+        qty_items_per_page = 6,
+        num_pages = 4,
+        num_pages_before_current_page = 1,
+        num_pages_after_current_page = 2
+    )
+
+    return render(request, "home.html", context=pagination_dict)
 
 def recipe_details(request, recipe_id):
     recipe = Recipe.objects.filter(id=recipe_id, is_published = True)
@@ -26,10 +37,22 @@ def category_recipes(request, category_id):
 
     if(category_name):
         category_name = category_name[0].name
+
+        pagination_dict = make_pagination(
+            request,
+            recipes,
+            qty_items_per_page=6,
+            num_pages=4,
+            num_pages_before_current_page=1,
+            num_pages_after_current_page=2
+        )
+
+        context = pagination_dict
+        context["category_name"] = category_name
     else:
         return HttpResponse(content="Categoria não encontrada", status=404)
 
-    return render(request, "category_view.html", context={"recipes":recipes, "category_name":category_name})
+    return render(request, "category_view.html", context)
 
 def recipes_search(request):
     params = request.GET
@@ -41,6 +64,20 @@ def recipes_search(request):
             ),
             is_published = True
         )
-        return render(request, "search.html", context={"search_term":search_term, "recipes":recipes})
+
+        pagination_dict = make_pagination(
+            request,
+            recipes,
+            qty_items_per_page=6,
+            num_pages=4,
+            num_pages_before_current_page=1,
+            num_pages_after_current_page=2
+        )
+
+        context = pagination_dict
+        context["search_term"] = search_term
+        context["search_string"] = f'&search={search_term}'
+
+        return render(request, "search.html", context=context)
     
     return HttpResponse("nenhum termo correspondente foi encontrado", status=404)
