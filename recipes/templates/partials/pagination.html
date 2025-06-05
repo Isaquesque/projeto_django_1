@@ -1,0 +1,41 @@
+{% if has_more_than_one_page %}
+        <div class="pagination-container">
+            {% if not first_page_is_in_range %}
+                <div class="page-container page-link">
+                    <a href="?page={{first_page}}{{search_string}}">
+                        {{first_page}}
+                    </a>
+                </div>
+                <div class="page-container page-item">
+                    <span>...</span>
+                </div>
+            {% endif %}
+
+            {% for page_number in pagination_list %}
+                {% if current_page == page_number %}
+                    <div class="page-container page-current">
+                        <a href="?page={{page_number}}{{search_string}}">
+                            {{page_number}}
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="page-container page-link">
+                        <a href="?page={{page_number}}{{search_string}}">
+                            {{page_number}}
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            {% if not last_page_is_in_range %}
+                <div class="page-container page-item">
+                    <span>...</span>
+                </div>
+                <div class="page-container page-link">
+                    <a href="?page={{last_page}}{{search_string}}">
+                        {{last_page}}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
