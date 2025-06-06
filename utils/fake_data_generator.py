@@ -35,26 +35,33 @@ class DataGenerator():
         "lanche",
         "sobremesa"
     ]
+    _time_units=[
+        "minutos",
+        "horas"
+    ]
     @classmethod
     def generate(cls):
-        title = fake.text(max_nb_chars=50,ext_word_list=DataGenerator._title_words)
+        title = fake.text(max_nb_chars=50,ext_word_list=cls._title_words,)
         name = fake.name()
         date = fake.date(pattern="%d/%m/%Y")
         time = fake.time(pattern="%I:%M")
-        category = fake.word(ext_word_list=DataGenerator._category_choices)
+        category = fake.word(ext_word_list=cls._category_choices)
         text = fake.text(max_nb_chars=300)
         preparation_time = fake.random_int(min=1,max=300)
+        preparation_time_unit = fake.text(max_nb_chars=7,ext_word_list=cls._time_units)
         portions = fake.random_int(min=1,max=50)
         preparation_steps = fake.text(max_nb_chars=5000)
 
         data = {
             "title": title,
+            "slug":"-".join(title.split(" ")),
             "name": name,
             "date": date,
             "time": time,
             "category": category,
             "text": text,
             "preparation_time": preparation_time,
+            "preparation_time_unit":preparation_time_unit,
             "portions": portions,
             "preparation_steps": preparation_steps
         }
