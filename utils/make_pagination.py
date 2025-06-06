@@ -16,18 +16,23 @@ def make_pagination(
     
     paginator = Paginator(objects, qty_items_per_page)
 
-    pagination_dict = pagination(
-        paginator.num_pages,
-        num_pages,
-        current_page,
-        num_pages_before_current_page,
-        num_pages_after_current_page
-    )
+    try:
+        pagination_dict = pagination(
+            paginator.num_pages,
+            num_pages,
+            current_page,
+            num_pages_before_current_page,
+            num_pages_after_current_page
+        )
+    except ValueError as err:
+        print(f"Não esperava {err}")
+        raise
 
     pagination_dict = {
         "recipes": paginator.page(current_page).object_list,
         "pagination_list": pagination_dict["pagination_list"],
         "current_page": pagination_dict["current_page"],
+        "per_page": qty_items_per_page,
         "first_page": pagination_dict["first_page"],
         "last_page": pagination_dict["last_page"],
         "first_page_is_in_range": pagination_dict["first_page_is_in_range"],
