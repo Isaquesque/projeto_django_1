@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from utils.fake_data_generator import DataGenerator
 from .models import Recipe, Category
 from django.db.models import Q
 from django.core.paginator import Paginator
@@ -9,14 +8,17 @@ from utils.make_pagination import make_pagination
 def home(request):
     all_recipes = list(Recipe.objects.all().filter(is_published = True))
 
-    pagination_dict = make_pagination(
-        request,
-        all_recipes,
-        qty_items_per_page = 6,
-        num_pages = 4,
-        num_pages_before_current_page = 1,
-        num_pages_after_current_page = 2
-    )
+    try:
+        pagination_dict = make_pagination(
+            request,
+            all_recipes,
+            qty_items_per_page = 6,
+            num_pages = 4,
+            num_pages_before_current_page = 1,
+            num_pages_after_current_page = 2
+        )
+    except ValueError as err:
+        return HttpResponse(content=err, status=404)
 
     return render(request, "home.html", context=pagination_dict)
 
@@ -37,15 +39,17 @@ def category_recipes(request, category_id):
 
     if(category_name):
         category_name = category_name[0].name
-
-        pagination_dict = make_pagination(
-            request,
-            recipes,
-            qty_items_per_page=6,
-            num_pages=4,
-            num_pages_before_current_page=1,
-            num_pages_after_current_page=2
-        )
+        try:
+            pagination_dict = make_pagination(
+                request,
+                recipes,
+                qty_items_per_page=6,
+                num_pages=4,
+                num_pages_before_current_page=1,
+                num_pages_after_current_page=2
+            )
+        except ValueError as err:
+            return HttpResponse(content=err, status=404)
 
         context = pagination_dict
         context["category_name"] = category_name
@@ -65,14 +69,17 @@ def recipes_search(request):
             is_published = True
         )
 
-        pagination_dict = make_pagination(
-            request,
-            recipes,
-            qty_items_per_page=6,
-            num_pages=4,
-            num_pages_before_current_page=1,
-            num_pages_after_current_page=2
-        )
+        try:
+            pagination_dict = make_pagination(
+                request,
+                recipes,
+                qty_items_per_page=6,
+                num_pages=4,
+                num_pages_before_current_page=1,
+                num_pages_after_current_page=2
+            )
+        except ValueError as err:
+            return HttpResponse(content=err, status=404)
 
         context = pagination_dict
         context["search_term"] = search_term
