@@ -2,7 +2,7 @@ from django.urls import reverse, resolve
 from recipes import views
 from .test_recipe_base_data import TestRecipeBaseData
 
-class RecipeRecipeViewTest(TestRecipeBaseData):
+class TestRecipeRecipeView(TestRecipeBaseData):
     
     def test_recipe_recipe_view_function_is_correct(self):
         view = resolve(reverse("recipe",kwargs={"recipe_id":1}))
