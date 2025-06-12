@@ -1,6 +1,5 @@
-{% extends 'layouts/base.html' %}
+{% extends 'global/layouts/base.html' %}
 {%block content%}
-    {% include 'partials/header.html' %}
     {% include 'partials/search_form.html' %}
     <div class="my text-center">
         <h1>Receitas da categoria: {{category_name}}</h1>
@@ -19,5 +18,4 @@
         </div>
     </div>
     {% include 'partials/pagination.html' %}
-    {% include 'partials/footer.html' %}
 {%endblock%}
