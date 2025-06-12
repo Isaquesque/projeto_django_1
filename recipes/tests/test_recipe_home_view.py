@@ -56,7 +56,7 @@ class TestRecipeHomeViewPagination(TestPaginationHelper):
         self.validate_pagination_view_state(
             response,
             pagination_list=[1,2,3],
-            current_page=2,
+            current_page=1,
             per_page=6,
             first_page=1,
             last_page=3,
