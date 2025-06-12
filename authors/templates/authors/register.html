@@ -1,0 +1,31 @@
+{% extends 'global/layouts/base.html'%}
+{% block content %}
+    <div class="main-content container">
+        <div class="container text-center">
+            <h2>Register</h2>
+        </div>
+    </div>
+        
+    <div class="main-content-container container">
+        <form action="" method="post">
+            {%csrf_token%}
+            <div class="form-content">
+                {%for field in form%}
+                    <div class="form-group">
+                        <label for="{{field.id_for_label}}">{{field.label}}</label>
+                        {{field}}
+                        {%if field.help_text%}
+                            <p class="help-text">{{field.help_text}}</p>
+                        {%endif%}
+                        {{field.errors}}
+                    </div>
+                {%endfor%}
+                <div class="form-group">
+                    <input type="submit" value="Enviar">
+                </div>
+            </div>
+        </form>
+    </div>
+        
+    
+{% endblock %}
