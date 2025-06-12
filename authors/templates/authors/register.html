@@ -7,7 +7,7 @@
     </div>
         
     <div class="main-content-container container">
-        <form action="" method="post">
+        <form action="{%url 'register_create'%}" method="post">
             {%csrf_token%}
             <div class="form-content">
                 {%for field in form%}
@@ -20,7 +20,7 @@
                         {{field.errors}}
                     </div>
                 {%endfor%}
-                <div class="form-group">
+                <div class="form-group form-submit">
                     <input type="submit" value="Enviar">
                 </div>
             </div>
