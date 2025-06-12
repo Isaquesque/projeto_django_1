@@ -315,6 +315,48 @@ h1,h2,h3,h4,h5,h6{
     filter: brightness(.8);
 }
 
+/* forms */
+
+.form-content{
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin: 0 auto;
+    max-width: 64rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.form-group{
+    flex-grow: 1;
+}
+
+.form-submit{
+    flex-basis: 100%;
+}
+
+.form-submit input{
+    max-width: 8rem;
+    color: var(--color-white);
+    background-color: var(--color-primary-dark);
+    cursor: pointer;
+}
+
+.form-content label, .help-text, .errorlist{
+    display: block;
+    margin: 0.5rem 0;
+    font-size: 1.4rem;
+}
+.errorlist{
+    list-style: none;
+    color: var(--color-error-dark);
+}
+.form-content input{
+    width: 100%;
+    padding: 1rem;
+    border-radius: 0.4rem;
+    border: 1px solid var(--color-primary-dark);
+}
+
 /* classes ultilitarias */
 
 .my{
@@ -322,10 +364,6 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .p-y{
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-}
-.form-content{
     padding-top: 2rem;
     padding-bottom: 2rem;
 }
