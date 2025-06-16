@@ -315,6 +315,48 @@ h1,h2,h3,h4,h5,h6{
     filter: brightness(.8);
 }
 
+/* messages */
+
+.message-container{
+    max-width: 64rem;
+    padding: 2rem 0;
+    margin: 0 auto;
+}
+
+.message-list{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.message-item{
+    text-align: center;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.success{
+    border: 1px solid var(--color-success-dark);
+    background-color:var(--color-success-light);
+}
+.error{
+    border: 1px solid var(--color-error-dark);
+    background-color:var(--color-error-light);
+}
+.warning{
+    border: 1px solid var(--color-warning-dark);
+    background-color:var(--color-warning-light);
+}
+.info{
+    border: 1px solid var(--color-info-dark);
+    background-color:var(--color-info-light);
+}
+
+.message-text{
+    font-size: 1.5rem;
+}
+
 /* forms */
 
 .form-content{
