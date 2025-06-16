@@ -1,0 +1,13 @@
+{%if messages%}
+    <div class="message-container">
+        <ul class="message-list">
+            {%for message in messages%}
+                <li class="message-item {{message.tags}}">
+                    <p class="message-text">
+                        {{message}}
+                    </p>
+                </li>
+            {%endfor%}
+        </ul>
+    </div>
+{%endif%}
